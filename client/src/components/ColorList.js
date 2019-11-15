@@ -32,7 +32,7 @@ const ColorList = ({ colors, updateColors }) => {
   const deleteColor = (color, e) => {
     e.stopPropagation();
     axiosWithAuth()
-      .delete(`/api.colors/${color.id}`)
+      .delete(`/api/colors/${color.id}`)
       .then(res => {
         updateColors(colors.filter(item => item.id !== color.id));
         return color.id === colorToEdit.id ? setEditing(false) : null;
