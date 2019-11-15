@@ -115,7 +115,8 @@ const ColorList = ({ colors, updateColors }) => {
         </label>
         <label>hex code:
           <input 
-            onChange={e => setColorToAdd({...colorToAdd, hex: e.target.value})}
+            onChange={e => setColorToAdd({...colorToAdd, code: {hex: e.target.value}})}
+            value={colorToAdd.code.hex}
           />
         </label>
         <div className="button-row">
