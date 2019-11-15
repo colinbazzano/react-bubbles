@@ -10,6 +10,18 @@ const ColorList = ({ colors, updateColors }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const [colorToAdd, setColorToAdd] = useState(initialColor);
+
+  const addColor = e => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post(`/api/colors`, colorToAdd)
+      .then(res => {
+        updateColors([...colors, colorToAdd]);
+        setColorToAdd(initialColor);
+      })
+      .catch(err => console.log(err));
+  };
 
   const editColor = color => {
     setEditing(true);
@@ -92,10 +104,29 @@ const ColorList = ({ colors, updateColors }) => {
           </div>
         </form>
       )}
+      <form onSubmit={addColor}>
+        <p>Add a Color</p>
+        <label>
+          color name:
+          <input
+            onChange={e => setColorToAdd({...colorToAdd, color: e.target.value })}
+            value={colorToAdd.color}
+            />
+        </label>
+        <label>hex code:
+          <input 
+            onChange={e => setColorToAdd({...colorToAdd, hex: e.target.value})}
+          />
+        </label>
+        <div className="button-row">
+          <button type="submit">Add</button>
+        </div>
+      </form>
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      
     </div>
   );
 };
-
+// make sure to look at how you had to add the form ABOVE the div w the class name spacer, otherwise it would not appear where you wanted it
 export default ColorList;
